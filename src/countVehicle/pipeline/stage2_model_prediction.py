@@ -9,6 +9,7 @@ class ModelPredictionPipeline:
         m.initial_prediction()
         m.interpolate_data()
         m.make_visualization()
+        m.find_count()
 
 
 # if __name__ == '__main__':

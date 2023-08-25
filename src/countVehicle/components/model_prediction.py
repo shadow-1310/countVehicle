@@ -15,7 +15,7 @@ class ModelPrediction:
         # self.cap = vid_path
         self.test_data_path = 'artifacts/test.csv'
         self.interpolated_data_path = 'artifacts/test_interpolated.csv'
-        self.output_vid_path = 'artifacts/output.avi'
+        self.output_vid_path = 'artifacts/output.webm'
 
     def initial_prediction(self):
         cap = self.cap
@@ -108,12 +108,29 @@ class ModelPrediction:
             writer.writeheader()
             writer.writerows(interpolated_data)
 
+    def find_count(self):
+        df = pd.read_csv(self.interpolated_data_path)
+
+        car_ids = df['car_id'].values
+
+        count_dict = {}
+        counter = 1
+        result = []
+        for num in car_ids:
+            if num not in count_dict:
+                count_dict[num] = counter
+                counter += 1
+            result.append(count_dict[num])
+        df['count'] = result
+        df.to_csv(self.interpolated_data_path, index=False)
 
     def make_visualization(self):
         cap = self.cap
         results = pd.read_csv(self.interpolated_data_path)
 
-        fourcc = cv2.VideoWriter_fourcc('X', 'V', 'I', 'D')  # Specify the codec
+        # fourcc = cv2.VideoWriter_fourcc('X', 'V', 'I', 'D')  # Specify the codec
+        fourcc = cv2.VideoWriter_fourcc(*'vp80')  # Specify the codec
+        # fourcc = 0x00000021
         fps = cap.get(cv2.CAP_PROP_FPS)
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))

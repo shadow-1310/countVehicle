@@ -9,7 +9,7 @@ from countVehicle.pipeline.stage2_model_prediction import ModelPredictionPipelin
 st.sidebar.title("License Plate Tracking")
 
 st.header("Original Video")
-
+# st.video("artifacts/output.avi")
 vid = st.file_uploader("Upload your video here....")
 button = st.button("upload")
 # output = cv2.VideoCapture("artifacts/output.mp4")
@@ -20,7 +20,7 @@ if button:
     m = ModelPredictionPipeline(path)
     m.main()
 
-    video_file = open('artifacts/output.avi', 'rb') #enter the filename with filepath
+    video_file = open('artifacts/output.webm', 'rb') #enter the filename with filepath
 
     video_bytes = video_file.read() #reading the file
 
